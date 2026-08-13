@@ -497,3 +497,76 @@ svg {
 } */
 
 /* Tawk.to Widget Customization */
+
+/* ===== SUCCESS MODAL ===== */
+.modal {
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, visibility 0.18s ease;
+  z-index: 2000;
+}
+
+.modal.open,
+.modal[aria-hidden="false"] {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background: #0f0f0f;
+  color: white;
+  padding: 22px;
+  border-radius: 12px;
+  width: 92%;
+  max-width: 420px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  text-align: center;
+  transform: translateY(-8px);
+  transition: transform 0.18s ease;
+}
+
+.modal.open .modal-content,
+.modal[aria-hidden="false"] .modal-content {
+  transform: translateY(0);
+}
+
+.modal-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.modal-actions {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.modal-ok-btn {
+  padding: 10px 20px;
+  background: #1EC07A;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.modal-ok-btn:focus {
+  outline: 3px solid rgba(30,192,122,0.25);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal, .modal-content { transition: none; }
+}

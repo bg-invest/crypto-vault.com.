@@ -8,9 +8,9 @@
 </head>
 <body class="dashboard-body">
     <!-- NAVBAR -->
-   <nav class="navbar">
-    <div class="logo"><a href="dashboard.html">CryptoVault</a>
-    </div>
+    <nav class="navbar">
+        <div class="logo">CryptoVault
+        </div>
         <input type="checkbox" id="sidebar-active">
       <label id="overlay" for="sidebar-active"></label>
        <label for="sidebar-active" class="open-side-button">
@@ -70,7 +70,43 @@
         <div id="bank-loading" class="loading-indicator" aria-live="polite">Processing withdrawal…</div>
       </form>
 
+      <!-- Success Modal (requires OK) -->
+      <div id="success-modal" class="modal" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="success-title">
+          <div class="modal-check">
+            <svg viewBox="0 0 24 24" width="72" height="72" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="12" fill="#1EC07A"/>
+              <path d="M7 13.5l2.5 2.5L17 8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h2 id="success-title">Success</h2>
+          <div class="modal-actions">
+            <button id="success-ok-btn" class="modal-ok-btn" aria-label="Close success dialog">OK</button>
+          </div>
+        </div>
+      </div>
+
       <script>
+        function openSuccessModal() {
+          const modal = document.getElementById('success-modal');
+          const ok = document.getElementById('success-ok-btn');
+          modal.setAttribute('aria-hidden', 'false');
+          modal.classList.add('open');
+          // focus OK for accessibility
+          ok.focus();
+        }
+
+        function closeSuccessModal() {
+          const modal = document.getElementById('success-modal');
+          modal.classList.remove('open');
+          modal.setAttribute('aria-hidden', 'true');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+          const ok = document.getElementById('success-ok-btn');
+          ok.addEventListener('click', closeSuccessModal);
+        });
+
         function setupWithdrawButton(buttonId, loadingId) {
           const button = document.getElementById(buttonId);
           const loading = document.getElementById(loadingId);
@@ -79,11 +115,12 @@
             button.disabled = true;
             loading.style.display = 'block';
 
+            // simulate processing delay then show success modal
             setTimeout(() => {
               loading.style.display = 'none';
               button.disabled = false;
-              alert('Your withdrawal request is currently awaiting final confirmation. Please allow some time for the verification process to be completed before attempting another withdrawal.');
-            }, 5000);
+              openSuccessModal();
+            }, 3000);
           });
         }
 
